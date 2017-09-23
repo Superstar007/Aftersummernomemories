@@ -1,0 +1,45 @@
+#include <iostream>
+#include <math.h>
+
+int sort_qsort(int *arr, int arr_size, int first, int last)
+{
+    int mid, c;
+    int l = last, f = first;
+    mid = arr[(f + l) / 2]; //вычисление опорного элемента
+    do
+    {
+        while (arr[f] < mid)
+            f++;
+        while (arr[l] > mid)
+            l--;
+        if (f <= l) //перестановка элементов
+        {
+            if (f != l)
+            {
+                c = arr[f];
+                arr[f] = arr[l];
+                arr[l] = c;
+            }
+            f++;
+            l--;
+        }
+    } while (f <= l);
+    if (first < l) sort_qsort(arr, arr_size, first, l);
+    if (f < last) sort_qsort(arr, arr_size, f, last);
+    return 0;
+}
+
+int main()
+{
+    int a[500000], N;
+    int i;
+    std::cin >> N;
+
+    for (i = 0; i < N; i++)
+        std::cin >> a[i];
+    sort_qsort(a, N, 0, N - 1);
+
+    for (i = 0; i < N; i++)
+        std::cout << a[i] << " ";
+    return 0;
+}
